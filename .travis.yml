@@ -1,46 +1,39 @@
----
 language: node_js
 node_js:
-  # we recommend testing addons with the same minimum supported node version as Ember CLI
-  # so that your addon works for all apps
-  - "4"
-
+- '4'
 sudo: false
 dist: trusty
-
 addons:
   chrome: stable
-
 cache:
   directories:
-    - $HOME/.npm
-
+  - "$HOME/.npm"
 env:
   global:
-    # See https://git.io/vdao3 for details.
-    - JOBS=1
+  - JOBS=1
   matrix:
-    # we recommend new addons test the current and previous LTS
-    # as well as latest stable release (bonus points to beta/canary)
-    - EMBER_TRY_SCENARIO=ember-lts-2.12
-    - EMBER_TRY_SCENARIO=ember-lts-2.16
-    - EMBER_TRY_SCENARIO=ember-release
-    - EMBER_TRY_SCENARIO=ember-beta
-    - EMBER_TRY_SCENARIO=ember-canary
-    - EMBER_TRY_SCENARIO=ember-default
-
+  - EMBER_TRY_SCENARIO=ember-lts-2.12
+  - EMBER_TRY_SCENARIO=ember-lts-2.16
+  - EMBER_TRY_SCENARIO=ember-release
+  - EMBER_TRY_SCENARIO=ember-beta
+  - EMBER_TRY_SCENARIO=ember-canary
+  - EMBER_TRY_SCENARIO=ember-default
 matrix:
   fast_finish: true
   allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-canary
-
+  - env: EMBER_TRY_SCENARIO=ember-canary
 before_install:
-  - npm config set spin false
-  - npm install -g npm@4
-  - npm --version
-
+- npm config set spin false
+- npm install -g npm@4
+- npm --version
 script:
-  - npm run lint:js
-  # Usually, it's ok to finish the test scenario without reverting
-  #  to the addon's original dependency state, skipping "cleanup".
-  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+- npm run lint:js
+- node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+deploy:
+  provider: npm
+  email: nikodemjaworski@gmail.com
+  api_key:
+    secure: svNHn2Dw+kFYcjidmRHDjoPq1sS8E3H9HRlvgew0Ipzg2yBpnFh0XmoDfHTzMb0z5mAzHDBYtuUf/9FOQZrCt4Lh8372atO0ql7248sBG7DevNG4S7/fUlwzz6nhULVCLZ5ljf6XszaucSma9nlNiNfQrTzHg+VV2yrT1Y6kYd8tikbiwTXeOBKcw2Hhqj1OJD1X8ch1/0O1Rbu2sGi39xFCqDOMhu2Z/Hn+4mvIe+NtKc2i6aRfNCf+pN6W6sTQJKREB7TpP+jrpaUsg3i45HioLjVPouQMnzmaYp3Xbvaj42kE44ZT9JpOjn7PjfYp3QbSnYBaUTVSZvuETrNF+RwLOUA7BxlVm+Rcdav3b5VpUA7YPtqDQZcydg62xjIWDKru2DNj97JQXJiIQUe83QAjGxWpHplTxzKKV8d8c2huL//EpzFL/uUN7QAB1LIfNZCbxT4e2rOOiC4H+5/1pf9YPFEGyZuD9mdPzWhcgZXDjJeuMkeqgbcNtv1TvrGcKEKi1O7kK4diguTMNnHOlFaE6oBeUIUSAWkJadjml7iJ+C05gb8hNad34vrZg163OAgIdRNockD7nfLU3RoSwqGJ54IkGtvIbXQoRvV/qRPEwCqgFiYtpasLFbV7/Yo4CI12Ewml6wv8aEDFZH7CXSgAh3AyL7pcZegrZPJm8SQ=
+  on:
+    tags: true
+    repo: medokin/ember-cli-deploy-ftps
