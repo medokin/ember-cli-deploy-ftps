@@ -1,25 +1,21 @@
 {
   "name": "ember-cli-deploy-ftps",
   "version": "0.0.2",
-  "description": "(WIP) FTP deploy with TLS!",
+  "description": "FTP deploy with TLS!",
   "keywords": [
     "ember-addon",
     "ember-cli-deploy-plugin"
   ],
   "license": "MIT",
   "author": "Nikodem Jaworski <nikodemjaworski@gmail.com>",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
-  "repository": "",
+  "repository": "https://github.com/medokin/ember-cli-deploy-ftps",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
     "test": "./node_modules/.bin/eslint index.js lib/* tests/**/*.js && node ./node_modules/mocha/bin/mocha tests/unit/index-nodetest.js"
   },
   "dependencies": {
-    "basic-ftp": "^2.7.1",
+    "basic-ftp": "^2.8.0",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-deploy-plugin": "^0.2.9"
   },

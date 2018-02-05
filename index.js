@@ -31,6 +31,7 @@ module.exports = {
           username: this.readConfig('username'),
           password: this.readConfig('password'),
           tls: this.readConfig('tls'),
+          clear: this.readConfig('clear'),
           localRoot: context.distDir,
           remoteRoot: this.readConfig('remoteRoot'),
         };
@@ -48,9 +49,17 @@ module.exports = {
         }
 
         await client.login(config.username, config.password);
-        await client.cd(config.remoteRoot);
+
+        if(config.remoteRoot != '/') {
+          await client.cd(config.remoteRoot);
+        }
+
         await client.useDefaultSettings();
-        await client.clearWorkingDir();
+
+        if (config.clear) {
+          await client.clearWorkingDir();
+        }
+
         await client.uploadDir(config.localRoot);
 
         client.close();
